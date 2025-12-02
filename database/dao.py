@@ -35,13 +35,14 @@ class DAO:
         return result
 
     @staticmethod
-    def existsConnessioneTra(u:Hub,v:Hub):
+    def existsConnessioneTra(u:Hub,v:Hub,threshold:int):
         conn = DBConnect.get_connection()
         result =[]
         query = """select * from spedizione s 
-                 where s.id_hub_origine =%s and s.id_hub_destinazione= %s"""
+                 where s.id_hub_origine =%s and s.id_hub_destinazione= %s 
+                 and valore_merce >= %s"""
         cursor = conn.cursor()
-        cursor.execute(query,(u.id,v.id))
+        cursor.execute(query,(u.id,v.id,threshold))
         for row in cursor :
             result.append(row)
            # print(row)

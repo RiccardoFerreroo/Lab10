@@ -20,7 +20,7 @@ class Model:
             self.G.add_node(hub)
         for u in self.lista_nodes:
             for v in self.lista_nodes:
-                risultato = DAO.existsConnessioneTra(u,v)
+                risultato = DAO.existsConnessioneTra(u,v,threshold)
                 if (len(risultato)>0):# esiste almeno una connessione
                     self.G.add_edge(u,v)# creo arco
                     print(f"aggiunto arco tra {u}e {v}")
