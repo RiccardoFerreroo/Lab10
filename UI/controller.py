@@ -30,6 +30,7 @@ class Controller:
         num_nodi = self._model.get_num_nodes()
         num_archi = self._model.get_num_edges()
         edges = self._model.get_all_edges()
-
+        graph =self._model.costruisci_grafo(self, e)
+        slef._view.lista_visualizzazione = graph
         # TODO
 
