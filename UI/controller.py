@@ -1,3 +1,5 @@
+from logging import exception
+
 import flet as ft
 from UI.view import View
 from model.model import Model
@@ -16,5 +18,16 @@ class Controller:
         * Numero di Tratte
         * Lista di Tratte che superano il costo indicato come soglia
         """
+        valore = self._view.guadagno_medio_minimo.value
+        if valore.strip() is None:
+            self._view.show_alert(" inserire valore valido")
+            return
+        try:
+            valore = float(valore)
+        except Exception as e:
+            self._view.show_alert(" inserire valore valido")
+            return
+
+
         # TODO
 
