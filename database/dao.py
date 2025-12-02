@@ -40,7 +40,7 @@ class DAO:
         result =[]
         query = """select * from spedizione s 
                  where s.id_hub_origine =%s and s.id_hub_destinazione= %s 
-                 and valore_merce >= %s"""
+                 having AVG(valore_merce) >= %s"""
         cursor = conn.cursor()
         cursor.execute(query,(u.id,v.id,threshold))
         for row in cursor :
@@ -50,4 +50,16 @@ class DAO:
         conn.close()
 
         return result
+    @staticmethod
+    def get_num_edges(self):
+        conn = DBConnect.get_connection()
 
+        query = """ SELECT COUNT(*) AS num_edges
+                    FROM (SELECT DISTINCT id_hub_origine, id_hub_destinazione
+                            FROM spedizione) AS t """
+        cursor = conn.cursor()
+        cursor.execute(query)
+        (result,) = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        return result

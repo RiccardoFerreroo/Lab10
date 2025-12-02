@@ -35,6 +35,8 @@ class Model:
         :return: numero di edges del grafo
         """
 
+        num_edges = DAO.get_num_edges()
+        return num_edges
         # TODO
 
     def get_num_nodes(self):

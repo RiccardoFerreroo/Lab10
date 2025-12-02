@@ -4,3 +4,7 @@ model.get_num_nodes()
 
 model.costruisci_grafo(350)
 
+
+
+
+
