@@ -33,3 +33,20 @@ class DAO:
         conn.close()
 
         return result
+
+    @staticmethod
+    def existsConnessioneTra(u:Hub,v:Hub):
+        conn = DBConnect.get_connection()
+        result =[]
+        query = """select * from spedizione s 
+                 where s.id_hub_origine =%s and s.id_hub_destinazione= %s"""
+        cursor = conn.cursor()
+        cursor.execute(query,(u.id,v.id))
+        for row in cursor :
+            result.append(row)
+           # print(row)
+        cursor.close()
+        conn.close()
+
+        return result
+
