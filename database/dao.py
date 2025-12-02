@@ -17,7 +17,7 @@ class DAO:
         for row in cursor :
             print(row)
             hub = Hub(row["id"], row["codice"], row["nome"],row["citta"],
-                      row["stato"], row["longitudine"], row["latitudine"]
+                      row["stato"], row["longitudine"], row["latitudine"])
             result.append(hub)
         return result
 
