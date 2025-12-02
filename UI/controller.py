@@ -27,7 +27,9 @@ class Controller:
         except Exception as e:
             self._view.show_alert(" inserire valore valido")
             return
-
+        num_nodi = self._model.get_num_nodes()
+        num_archi = self._model.get_num_edges()
+        edges = self._model.get_all_edges()
 
         # TODO
 

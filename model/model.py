@@ -12,6 +12,7 @@ class Model:
         Costruisce il grafo (self.G) inserendo tutti gli Hub (i nodi) presenti e filtrando le Tratte con
         guadagno medio per spedizione >= threshold (euro)
         """
+        self._nodes= DAO.get_all_hub()
         # TODO
 
     def get_num_edges(self):
@@ -19,6 +20,7 @@ class Model:
         Restituisce il numero di Tratte (edges) del grafo
         :return: numero di edges del grafo
         """
+
         # TODO
 
     def get_num_nodes(self):
@@ -26,6 +28,7 @@ class Model:
         Restituisce il numero di Hub (nodi) del grafo
         :return: numero di nodi del grafo
         """
+        num_nodes = DAO.get_num_nodes()
         # TODO
 
     def get_all_edges(self):
