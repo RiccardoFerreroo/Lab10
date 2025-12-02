@@ -29,7 +29,8 @@ class Model:
         :return: numero di nodi del grafo
         """
         num_nodes = DAO.get_num_nodes()
-        # TODO
+        #print(num_nodes)
+        return num_nodes
 
     def get_all_edges(self):
         """
