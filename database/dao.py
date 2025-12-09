@@ -1,5 +1,6 @@
 from database.DB_connect import DBConnect
 from model.hub import Hub
+from model.spedizione import Spedizione
 
 
 class DAO:
@@ -15,7 +16,7 @@ class DAO:
         cursor = conn.cursor(dictionary=True)
         cursor.execute(query)
         for row in cursor :
-            print(row)
+            #print(row)
             hub = Hub(row["id"], row["codice"], row["nome"],row["citta"],
                       row["stato"], row["longitudine"], row["latitudine"])
             result.append(hub)
@@ -35,23 +36,37 @@ class DAO:
         return result
 
     @staticmethod
-    def existsConnessioneTra(u:Hub,v:Hub,threshold:int):
+    def existsConnessioneTra(u:Hub,v:Hub,threshold:float):
         conn = DBConnect.get_connection()
-        result =[]
+        spedizioni =[]
         query = """select * from spedizione s 
                  where s.id_hub_origine =%s and s.id_hub_destinazione= %s 
-                 having AVG(valore_merce) >= %s"""
-        cursor = conn.cursor()
-        cursor.execute(query,(u.id,v.id,threshold))
+                 """
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute(query,(u.id,v.id))
         for row in cursor :
-            result.append(row)
-           # print(row)
+            spedizione = Spedizione(row["id"],row["id_compagnia"],row["numero_tracking"],
+                                    row["id_hub_origine"], row["id_hub_destinazione"],
+                                    row["data_ritiro_programmata"], row["distanza"],
+                                    row["data_consegna"], row["valore_merce"]
+                                    )
+
+            spedizioni.append(spedizione)
+           # print(spedizione)
         cursor.close()
         conn.close()
-
-        return result
+        #verifico threshold
+        somma = float(0)
+        if not spedizioni:
+            return[]
+        for s in spedizioni:
+            somma += s.valore_merce
+        if somma/ float(len(spedizioni))>= threshold:
+            return spedizioni
+        else:
+            return []
     @staticmethod
-    def get_num_edges(self):
+    def get_num_edges():
         conn = DBConnect.get_connection()
 
         query = """ SELECT COUNT(*) AS num_edges

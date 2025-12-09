@@ -5,7 +5,7 @@ class Model:
     def __init__(self):
         self._nodes = None
         self._edges = None
-        self.G = nx.Graph()
+        self.G = nx.Graph() #grafo semplice non orientato ( consegna )
         self.lista_nodes = []
         self.lista_edges = []
 
@@ -14,17 +14,30 @@ class Model:
         Costruisce il grafo (self.G) inserendo tutti gli Hub (i nodi) presenti e filtrando le Tratte con
         guadagno medio per spedizione >= threshold (euro)
         """
+        self.G.clear()
+
         self.lista_nodes= DAO.get_all_hub()
         #print("lista_nodes: ", self.lista_nodes)
         for hub in self.lista_nodes:
             self.G.add_node(hub)
+
         for u in self.lista_nodes:
             for v in self.lista_nodes:
-                risultato = DAO.existsConnessioneTra(u,v,threshold)
-                if (len(risultato)>0):# esiste almeno una connessione
-                    self.G.add_edge(u,v)# creo arco
-                    print(f"aggiunto arco tra {u}e {v}")
+                if u == v:
+                    continue
 
+                risultato = DAO.existsConnessioneTra(u,v,threshold)
+                if len(risultato)>0:# esiste almeno una connessione
+                    cifra = 0
+                    for elemento in risultato:
+                        cifra +=elemento.valore_merce
+
+                    peso = cifra / len(risultato)
+                    self.G.add_edge(u,v, weight=peso)# creo arco
+                    #print(f"aggiunto arco tra {u}e {v} "
+                        #  f"con valore medio {peso}")
+        #print(self.G)
+        return self.G
 
 
         # TODO
@@ -53,5 +66,14 @@ class Model:
         Restituisce tutte le Tratte (gli edges) con i corrispondenti pesi
         :return: gli edges del grafo con gli attributi (il weight)
         """
+        edges_info = []
+        for edge in self.G.edges(data=True):
+            u = edge[0]
+            v = edge[1]
+            data = edge[2]#dizionario con tutti gli attributi dell'arco
+            edges_info.append(f"{u.nome} -> {v.nome} -- Guadagno Medio"
+                              f" Per Spedizione: {data['weight']}")
+        return edges_info
+
         # TODO
 

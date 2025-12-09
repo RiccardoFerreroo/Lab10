@@ -22,5 +22,7 @@ class Spedizione:
 
     def __repr__(self):
         return f"{self.numero_tracking}"
+    def __hash__(self):
+        return hash(self.numero_tracking)
 
 
