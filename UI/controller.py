@@ -27,18 +27,27 @@ class Controller:
         except Exception as e:
             self._view.show_alert(" inserire valore valido")
             return
-        num_nodi = self._model.get_num_nodes()
-        num_archi = self._model.get_num_edges()
+
 
 
         self._model.costruisci_grafo(valore)
+
+        num_nodi = self._model.get_num_nodes()
+        num_archi = self._model.get_num_edges()
+
         edges = self._model.get_all_edges()
         #pulisco listview
         self._view.lista_visualizzazione.controls.clear()
+        self._view.lista_visualizzazione.controls.append(ft.Text(f"Nodi : {num_nodi}"))
+
+
+
+        self._view.lista_visualizzazione.controls.append(ft.Text(f"Archi : {num_archi}"))
+
+
 
         for edge_str in edges:
             self._view.lista_visualizzazione.controls.append(ft.Text(edge_str))
 
         self._view.update()
-        # TODO
 

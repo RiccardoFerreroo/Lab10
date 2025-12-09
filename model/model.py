@@ -50,7 +50,6 @@ class Model:
 
         num_edges = DAO.get_num_edges()
         return num_edges
-        # TODO
 
     def get_num_nodes(self):
         """
@@ -72,8 +71,8 @@ class Model:
             v = edge[1]
             data = edge[2]#dizionario con tutti gli attributi dell'arco
             edges_info.append(f"{u.nome} -> {v.nome} -- Guadagno Medio"
-                              f" Per Spedizione: {data['weight']}")
+                              f" Per Spedizione: €{data['weight']}")
         return edges_info
 
-        # TODO
+
 
